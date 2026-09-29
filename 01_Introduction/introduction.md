@@ -160,9 +160,11 @@ The visualization contains:
 
 The visualization can be rotated, zoomed, and explored interactively.
 
-### Interactive Visualization
+## Interactive 3D Regression
 
-[Open the Interactive 3D Regression](./regression_3d.html)
+Explore the regression model interactively:
+
+[Open Interactive 3D Regression](https://rayhanabdulfikri.github.io/machine-learning-zoomcamp-2026/01_Introduction/regression_3d.html)
 
 ---
 
