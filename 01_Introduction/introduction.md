@@ -1,132 +1,84 @@
 # Machine Learning Zoomcamp 2026 — Homework 01
 
-> **From raw car data to linear regression — my first step into Machine Learning.**
+> A hands-on introduction to Machine Learning through data exploration, missing-value handling, NumPy, linear algebra, and linear regression.
 
-This repository contains my work for **Machine Learning Zoomcamp 2026 — Homework 01**, where I explored the fundamentals of data analysis with **Pandas and NumPy** and implemented a simple **linear regression model from scratch using matrix operations**.
+This notebook contains my solution for **Machine Learning Zoomcamp 2026 — Homework 01**.
 
-The project starts with basic dataset exploration and gradually moves toward a mathematical machine learning implementation.
+The work starts with basic dataset exploration using **Pandas** and gradually moves toward implementing **linear regression from scratch** using NumPy matrix operations.
 
----
+## What This Notebook Covers
 
-## What I Built
+The homework is organized into seven exercises:
 
-The notebook covers the following workflow:
+1. **Pandas Version**
+   - Check the installed Pandas version.
 
-```text
-Car Dataset
-    │
-    ├── Explore the data
-    │
-    ├── Check dataset size
-    │
-    ├── Explore fuel types
-    │
-    ├── Find missing values
-    │
-    ├── Analyze Asian cars
-    │
-    ├── Handle missing horsepower values
-    │
-    └── Implement Linear Regression
-            │
-            ├── XᵀX
-            ├── (XᵀX)⁻¹
-            ├── w = (XᵀX)⁻¹Xᵀy
-            └── Interactive 3D Regression
-```
+2. **Records Count**
+   - Load the car fuel-efficiency dataset.
+   - Determine the number of records.
 
----
+3. **Fuel Types**
+   - Inspect the dataset columns.
+   - Identify the fuel types represented in the dataset.
+
+4. **Missing Values**
+   - Count missing values across the dataset columns.
+
+5. **Maximum Fuel Efficiency**
+   - Filter the dataset to cars from Asia.
+   - Find the maximum `fuel_efficiency_mpg`.
+
+6. **Median Value of Horsepower**
+   - Calculate the median of `horsepower`.
+   - Find the most frequent horsepower value.
+   - Fill missing horsepower values using the mode.
+   - Recalculate the median and compare the result.
+
+7. **Linear Regression with NumPy**
+   - Select cars from Asia.
+   - Use `vehicle_weight` and `model_year` as features.
+   - Convert the first seven rows into a NumPy array.
+   - Compute `X.T @ X`.
+   - Invert the resulting matrix.
+   - Create the target array `y`.
+   - Calculate the regression weights `w`.
+   - Calculate the sum of the elements of `w`.
 
 ## Dataset
 
-The project uses the **Car Fuel Efficiency 2026** dataset.
+The notebook uses:
 
-Some of the variables used in the analysis include:
+`car_fuel_efficiency_2026.csv`
 
-| Feature               | Description       |
-| --------------------- | ----------------- |
-| `origin`              | Vehicle origin    |
-| `fuel_type`           | Type of fuel      |
-| `vehicle_weight`      | Vehicle weight    |
-| `model_year`          | Model year        |
-| `horsepower`          | Engine horsepower |
-| `fuel_efficiency_mpg` | Fuel efficiency   |
+The dataset includes variables such as:
 
----
+| Column | Description |
+|---|---|
+| `origin` | Origin of the car |
+| `fuel_type` | Fuel type |
+| `vehicle_weight` | Vehicle weight |
+| `model_year` | Model year |
+| `horsepower` | Horsepower |
+| `fuel_efficiency_mpg` | Fuel efficiency |
 
-## Key Exercises
+## Linear Regression From Scratch
 
-### 1. Data Exploration
+The final exercise introduces the mathematical foundation of linear regression.
 
-I started by inspecting the dataset and answering basic questions such as:
-
-* What version of Pandas is being used?
-* How many records are in the dataset?
-* How many fuel types are available?
-* Which columns contain missing values?
-
-This establishes the basic workflow for understanding an unfamiliar dataset before modeling.
-
-### 2. Filtering and Feature Analysis
-
-For several exercises, I filtered the dataset to focus specifically on **cars from Asia**.
-
-Example:
-
-```python
-asia = df[df["origin"] == "Asia"]
-```
-
-I then explored variables such as `fuel_efficiency_mpg`, `vehicle_weight`, and `model_year`.
-
-### 3. Missing Value Handling
-
-The `horsepower` column contains missing values.
-
-I calculated:
-
-```text
-Median → Mode → Fill missing values → Median again
-```
-
-The missing values were filled using the most frequent horsepower value:
-
-```python
-mode_horsepower = df["horsepower"].mode()[0]
-
-df["horsepower"] = df["horsepower"].fillna(mode_horsepower)
-```
-
-The median was then recalculated to determine whether the imputation changed its value.
-
----
-
-# Linear Regression From Scratch
-
-The final exercise goes beyond using a pre-built machine learning library.
-
-Instead, I implemented the regression calculation directly with **NumPy matrix operations**.
-
-The features are:
+The selected features are:
 
 ```text
 vehicle_weight
 model_year
 ```
 
-The target values are:
+The target array is:
 
-```text
+```python
 [1100, 1300, 800, 900, 1000, 1100, 1200]
 ```
 
-The workflow is based on the normal equation:
-
-$$
-w = (X^TX)^{-1}X^Ty
-$$
-
-The implementation follows these steps:
+The regression weights are calculated with:
 
 ```python
 XTX = X.T @ X
@@ -136,104 +88,95 @@ XTX_inv = np.linalg.inv(XTX)
 w = XTX_inv @ X.T @ y
 ```
 
-Finally:
+The final operation is:
 
 ```python
 round(w.sum(), 3)
 ```
 
-This exercise helped me understand that linear regression is not just a black-box function. The model can be expressed directly through **linear algebra and matrix operations**.
+This exercise connects **NumPy matrix operations** with the mathematical formulation of linear regression.
 
----
+## Regression Visualization
 
-# Interactive 3D Visualization
+I also created a 3D visualization of the regression result.
 
-To make the regression easier to understand, I added an interactive **3D visualization using Plotly**.
+The visualization shows:
 
-The visualization contains:
+- `vehicle_weight` on the X-axis
+- `model_year` on the Y-axis
+- `y` on the Z-axis
+- Actual observations as points
+- The calculated regression plane
 
-* **Actual data points**
-* `vehicle_weight` on the X-axis
-* `model_year` on the Y-axis
-* `y` on the Z-axis
-* A **regression plane** generated from the calculated weights
+### Preview
 
-The visualization can be rotated, zoomed, and explored interactively.
+![3D Multiple Linear Regression](./assets/interactive-multiple-linear-regression.png)
 
-## Interactive 3D Regression
+### Interactive Version
 
-Explore the regression model interactively:
+[Open the Interactive 3D Regression](./assets/regression_3d.html)
 
-[Open Interactive 3D Regression](https://rayhanabdulfikri.github.io/machine-learning-zoomcamp-2026/01_Introduction/regression_3d.html)
+The interactive visualization can be rotated, zoomed, and explored directly in the browser.
 
----
+## Tools Used
 
-# What I Learned
+- Python
+- Pandas
+- NumPy
+- Plotly
+- Jupyter Notebook
+- Google Colab
 
-Through this homework, I practiced several important foundations:
-
-```text
-✓ Pandas DataFrame manipulation
-✓ Filtering and selecting data
-✓ Handling missing values
-✓ NumPy arrays
-✓ Matrix multiplication
-✓ Matrix inversion
-✓ Linear algebra for Machine Learning
-✓ Normal equation
-✓ Interactive data visualization
-```
-
-More importantly, the final exercise connected three concepts together:
+## Repository Structure
 
 ```text
-Data
-  ↓
-Linear Algebra
-  ↓
-Machine Learning
+01_Introduction/
+│
+├── HW_01_RayhanAbdulFikri.ipynb
+├── introduction.md
+│
+└── assets/
+    ├── car_fuel_efficiency_2026.csv
+    ├── interactive-multiple-linear-regression.png
+    └── regression_3d.html
 ```
 
-This is one of the first steps toward understanding how machine learning models work internally rather than only using high-level libraries.
+## Learning Focus
 
----
-
-# Tools
+The main concepts practiced in this homework are:
 
 ```text
-Python
-Pandas
-NumPy
-Plotly
-Jupyter Notebook
+Data Loading
+    ↓
+Data Exploration
+    ↓
+Filtering
+    ↓
+Missing-Value Handling
+    ↓
+NumPy Arrays
+    ↓
+Matrix Multiplication
+    ↓
+Matrix Inversion
+    ↓
+Linear Regression
+    ↓
+3D Visualization
 ```
 
----
-
-# Project Structure
-
-```text
-.
-├── HW_01_RayhanAbdulFikri(1).ipynb
-├── car_fuel_efficiency_2026.csv
-├── regression_3d.html
-└── introduction.md
-```
-
----
-
-# Course
+## Course
 
 **Machine Learning Zoomcamp 2026**
 
 Homework 01:
 
-[View the original homework](https://courses.datatalks.club/ml-zoomcamp-2026/homework/hw01)
-
----
+https://courses.datatalks.club/ml-zoomcamp-2026/homework/hw01
 
 ## Author
 
 **Rayhan Abdul Fikri**
 
-[GitHub](https://github.com/rayhanabdulfikri/)
+GitHub:
+
+https://github.com/rayhanabdulfikri/
